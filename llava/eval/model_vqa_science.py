@@ -31,7 +31,16 @@ def eval_model(args):
     disable_torch_init()
     model_path = os.path.expanduser(args.model_path)
     model_name = get_model_name_from_path(model_path)
-    tokenizer, model, image_processor, context_len = load_pretrained_model(model_path, args.model_base, model_name)
+    tokenizer, model, image_processor, context_len = load_pretrained_model(model_path, 
+                                                                           args.model_base, 
+                                                                           model_name,
+                                                                           args.pdrop_infer
+                                                                           )
+
+    model_class_name = type(model).__name__
+    if model_class_name == "LlavaLlamaForCausalLM_PDrop":
+        model.model.layer_list = eval(args.layer_list)
+        model.model.image_token_ratio_list = eval(args.image_token_ratio_list)
 
     questions = json.load(open(os.path.expanduser(args.question_file), "r"))
     questions = get_chunk(questions, args.num_chunks, args.chunk_idx)
@@ -106,6 +115,9 @@ if __name__ == "__main__":
     parser.add_argument("--temperature", type=float, default=0.2)
     parser.add_argument("--answer-prompter", action="store_true")
     parser.add_argument("--single-pred-prompt", action="store_true")
+    parser.add_argument("--layer_list", type=str, default= None)
+    parser.add_argument("--image_token_ratio_list", type=str, default= None)
+    parser.add_argument("--pdrop_infer", action='store_true', help="use this to apply pdrop inference to ori llava-1.5")
     args = parser.parse_args()
 
     eval_model(args)
