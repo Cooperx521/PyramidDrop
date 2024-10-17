@@ -31,10 +31,12 @@ def eval_model(args):
     disable_torch_init()
     model_path = os.path.expanduser(args.model_path)
     model_name = get_model_name_from_path(model_path)
+    if args.layer_list is not None:
+        pdrop_infer = True  # whether to use pdrop infer
     tokenizer, model, image_processor, context_len = load_pretrained_model(model_path, 
                                                                            args.model_base, 
                                                                            model_name,
-                                                                           args.pdrop_infer
+                                                                           pdrop_infer
                                                                            )
 
     model_class_name = type(model).__name__
@@ -117,7 +119,6 @@ if __name__ == "__main__":
     parser.add_argument("--single-pred-prompt", action="store_true")
     parser.add_argument("--layer_list", type=str, default= None)
     parser.add_argument("--image_token_ratio_list", type=str, default= None)
-    parser.add_argument("--pdrop_infer", action='store_true', help="use this to apply pdrop inference to ori llava-1.5")
     args = parser.parse_args()
 
     eval_model(args)

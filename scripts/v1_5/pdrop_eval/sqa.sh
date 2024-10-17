@@ -9,7 +9,6 @@ python -m llava.eval.model_vqa_science \
     --temperature 0 \
     --layer_list  '[8,16,24]' \
     --image_token_ratio_list "[1.0,0.5,0.25,0.125]" \
-    --pdrop_infer \
     --conv-mode vicuna_v1
 
 python llava/eval/eval_science_qa.py \

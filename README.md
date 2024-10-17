@@ -33,3 +33,16 @@ pip install -e .
 pip install -e ".[train]"
 pip install flash-attn --no-build-isolation
 ```
+
+## Efficient Inference
+
+We follow the original evaluation in [LLaVA](https://github.com/haotian-liu/LLaVA) for most of benchmarks. For [MMStar](https://github.com/MMStar-Benchmark/MMStar), we use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit). 
+
+See [Evaluation.md](https://github.com/haotian-liu/LLaVA/blob/main/docs/Evaluation.md) to prepare for inference. 
+
+If you want to use PyramidDrop to operate efficient inference on original llava1.5, evaluation code can be found in ```scripts/v1_5/pdrop_eval```
+
+Options to note:
+
+- `--layer_list  '[8,16,24]' `: denote the layers after which we apply rank & drop.
+- `--image_token_ratio_list "[1.0,0.5,0.25,0.125]" `: denote the image tokens ratio we retain at different stage, and this represents we obtain 50%, 25%, 12.5% after layer8, layer16, layer24.
