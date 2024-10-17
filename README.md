@@ -2,7 +2,7 @@
 
 ## 🎯 News
 
-**[2024.10.10]** 🚀 We release the paper at [ArXiv]()
+**[2024.10.18]** 🚀 We release the paper at [ArXiv]()
 
 ## 👨‍💻 Todo
 
