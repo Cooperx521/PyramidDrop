@@ -6,7 +6,6 @@
 
 ## 👨‍💻 Todo
 
-- [x] Release the code of PDrop
 - [x] Release the PDrop evaluation code of llava1.5
 - [ ] Release the PDrop training code of llava1.5
 - [ ] Release the PDrop evaluation code of llava-next
