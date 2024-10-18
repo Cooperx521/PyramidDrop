@@ -14,7 +14,7 @@
 
 ## 🔧 Install
 
-1. Clone this repository and navigate to Open-LLaVA-NeXT folder
+1. Clone this repository and navigate to PyramidDrop folder
 ```bash
 git clone https://github.com/Cooperx521/PyramidDrop.git
 cd PyramidDrop
