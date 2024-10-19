@@ -7,7 +7,7 @@
 ## 👨‍💻 Todo
 
 - [x] Release the PDrop evaluation and training code of llava1.5
-- [ ] Release the PDrop evaluation and training code of llava-next
+- [x] Release the PDrop evaluation and training code of llava-next
 - [ ] Release the checkpoints 
 
 ## 🔧 Install
@@ -64,5 +64,8 @@ If you want to use PyramidDrop to operate efficient inference on original llava1
 
 
 
-## Acknowledgement
-This repo is based on the codebase of [LLaVA](https://github.com/haotian-liu/LLaVA) and [Open-LLaVA-NeXT](https://github.com/xiaoachen98/Open-LLaVA-NeXT). Thanks for their impressive works!
+## ❤️ Acknowledgments
+
+- [LLaVA](https://github.com/haotian-liu/LLaVA): the codebase we built upon. Thanks for their brilliant contributions to the community.
+- [Open-LLaVA-NeXT](https://github.com/xiaoachen98/Open-LLaVA-NeXT): Thanks for the impressive open-source implementation of LLaVA-NeXT series.
+- [VLMEvalKit](https://github.com/open-compass/VLMEvalKit): the amazing open-sourced suit for evaluating various LMMs!
