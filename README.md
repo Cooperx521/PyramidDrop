@@ -6,10 +6,8 @@
 
 ## 👨‍💻 Todo
 
-- [x] Release the PDrop evaluation code of llava1.5
-- [ ] Release the PDrop training code of llava1.5
-- [ ] Release the PDrop evaluation code of llava-next
-- [ ] Release the PDrop training code of llava-next
+- [x] Release the PDrop evaluation and training code of llava1.5
+- [ ] Release the PDrop evaluation and training code of llava-next
 - [ ] Release the checkpoints 
 
 ## 🔧 Install
@@ -33,10 +31,21 @@ pip install -e .
 pip install -e ".[train]"
 pip install flash-attn --no-build-isolation
 ```
+## ⭐️ Quick Start
+<a name="core-implementation"></a>
+### 1. Core Implementation
+The main implementation of PyramidDrop is in ``` llava/model/modeling_llama_pdrop.py```. The efficient forward process of LLM with PyramidDrop is in function [pdrop_forward](https://github.com/Cooperx521/PyramidDrop/blob/16a233fee921aedad8de01529d9d2c9781af2eac/llava/model/modeling_llama_pdrop.py#L1106), and Rank & Drop is implemented in function [pdrop_rank_drop](https://github.com/Cooperx521/PyramidDrop/blob/16a233fee921aedad8de01529d9d2c9781af2eac/llava/model/modeling_llama_pdrop.py#L1291). 
+To prepare for PyramidDrop, the function [prepare_inputs_labels_for_multimodal_pdrop](https://github.com/Cooperx521/PyramidDrop/blob/16a233fee921aedad8de01529d9d2c9781af2eac/llava/model/llava_arch.py#L472-L474) collects the following parameters: the length of the text, the image placeholder position, and the number of image tokens.  The length of the text is used only during inference to determine the position of the last instruction token.
+The entire multimodal forward process is encapsulated within the [LlavaLlamaForCausalLM_PDrop](https://github.com/Cooperx521/PyramidDrop/blob/16a233fee921aedad8de01529d9d2c9781af2eac/llava/model/language_model/llava_llama_pdrop.py#L159) class.
+### 2. Compatibility
+The current code implementation is based on ```transformers-4.37.2```. If you want to run it on other versions of transformers, you only need to find modeling_llama.py and make some simple modifications. This includes adjusting the [pdrop_forward](https://github.com/Cooperx521/PyramidDrop/blob/16a233fee921aedad8de01529d9d2c9781af2eac/llava/model/modeling_llama_pdrop.py#L1106) and [pdrop_rank_drop](https://github.com/Cooperx521/PyramidDrop/blob/16a233fee921aedad8de01529d9d2c9781af2eac/llava/model/modeling_llama_pdrop.py#L1291) functions according to the specific transformer version.
+
+If you want to use PyramidDrop on your own model, and if the LLM is based on Llama, you can directly add these functions based on [Core Implementation](#core-implementation) to run it easily. If the LLM is not based on Llama, you will need to adjust these functions according to the forward function of your LLM.
 
 ## Efficient Inference
 
-We follow the original evaluation in [LLaVA](https://github.com/haotian-liu/LLaVA) for most of benchmarks. For [MMStar](https://github.com/MMStar-Benchmark/MMStar), we use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit). 
+We follow the original evaluation in [LLaVA](https://github.com/haotian-liu/LLaVA) for most of benchmarks. For MMStar, DocVQA, InfoVQA, ChartQA
+OCRVQA we use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit). 
 
 See [Evaluation.md](https://github.com/haotian-liu/LLaVA/blob/main/docs/Evaluation.md) to prepare for inference. 
 
@@ -45,4 +54,4 @@ If you want to use PyramidDrop to operate efficient inference on original llava1
 Options to note:
 
 - `--layer_list  '[8,16,24]' `: the layers after which we apply rank & drop.
-- `--image_token_ratio_list "[0.5,0.25,0.125]" `: denote the image tokens ratio we retain at different stage, and this represents we obtain 50%, 25%, 12.5% after layer8, layer16, layer24.
+- `--image_token_ratio_list "[0.5,0.25,0.125]" `: denote the image tokens ratio we retain at different stage, and this represents we obtain 50%, 25%, 12.5% after layer8, layer16, layer24. In this case, λ = 0.5.
