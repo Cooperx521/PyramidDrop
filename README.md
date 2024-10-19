@@ -40,7 +40,7 @@ The entire multimodal forward process is encapsulated within the [LlavaLlamaForC
 ### 2. Compatibility
 The current code implementation is based on ```transformers-4.37.2```. If you want to run it on other versions of transformers, you only need to find modeling_llama.py and make some simple modifications. This includes adjusting the [pdrop_forward](https://github.com/Cooperx521/PyramidDrop/blob/16a233fee921aedad8de01529d9d2c9781af2eac/llava/model/modeling_llama_pdrop.py#L1106) and [pdrop_rank_drop](https://github.com/Cooperx521/PyramidDrop/blob/16a233fee921aedad8de01529d9d2c9781af2eac/llava/model/modeling_llama_pdrop.py#L1291) functions according to the specific transformer version.
 
-If you want to use PyramidDrop on your own model, and if the LLM is based on Llama, you can directly add these functions based on [Core Implementation](#core-implementation) to run it easily. If the LLM is not based on Llama, you will need to adjust these functions according to the forward function of your LLM.
+If you want to use PyramidDrop on your own model, and if the LLM is based on llama, you can directly add these functions based on [Core Implementation](#core-implementation) to run it easily. If the LLM is not based on llama, you will need to adjust these functions according to the forward function of your LLM.
 
 ## Efficient Inference
 
