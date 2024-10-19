@@ -3,7 +3,7 @@
 export layer_list="[8,16,24]"
 export image_token_ratio_list="[0.5,0.25,0.125]"
 
-deepspeed llava/train/train_mem.py \
+deepspeed llava/train/train_mem_pdrop.py \
     --deepspeed ./scripts/zero3.json \
     --model_name_or_path lmsys/vicuna-13b-v1.5 \
     --version v1 \
