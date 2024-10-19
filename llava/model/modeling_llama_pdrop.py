@@ -1255,6 +1255,7 @@ class LlamaModel(LlamaPreTrainedModel):
                         attention_mask = _prepare_4d_causal_attention_mask(
                             attention_mask, (batch_size, seq_length), inputs_embeds, past_key_values_length
                         )
+                        
                 else:
                     # update position_ids in decoding stage when inference
                     stage = self.layer_list.index(rank_layer) # determine current stage
@@ -1316,7 +1317,7 @@ class LlamaModel(LlamaPreTrainedModel):
             if labels is None:
                 labels = torch.full((batch_size,features.shape[1]), IGNORE_INDEX, device=features.device)            
 
-            #####original attention reuse 
+            # obtain query_states and key_states to calculate attention map
             hidden_states=features.clone().detach()
             self_attn = self.layers[rank_layer].self_attn
             hidden_states = self.layers[rank_layer].input_layernorm(hidden_states)
@@ -1331,26 +1332,17 @@ class LlamaModel(LlamaPreTrainedModel):
             key_states = self_attn.k_proj(hidden_states)
             value_states = self_attn.v_proj(hidden_states)
 
-            # Flash attention requires the input to have the shape
-            # batch_size x seq_length x head_dim x hidden_dim
-            # therefore we just need to keep the original shape
-
             query_states = query_states.view(bsz, q_len, num_heads, head_dim).transpose(1, 2)
             key_states = key_states.view(bsz, q_len, num_key_value_heads, head_dim).transpose(1, 2)
             value_states = value_states.view(bsz, q_len, num_key_value_heads, head_dim).transpose(1, 2)
 
             kv_seq_len = key_states.shape[-2]
             cos, sin = self_attn.rotary_emb(value_states, seq_len=kv_seq_len)
-            # NOTE position_ids not change between layers 
+
             query_states, key_states = apply_rotary_pos_emb(query_states, key_states, cos, sin, position_ids)
 
-            # TODO: These transpose are quite inefficient but Flash Attention requires the layout [batch_size, sequence_length, num_heads, head_dim]. We would need to refactor the KV cache
-            # to be able to avoid many of these transpose/reshape/view.
-            # query_states = query_states.transpose(1, 2)
-            # key_states = key_states.transpose(1, 2)   #(bsz, num_head, seq_len, head_dim)
-            #####original attention
 
-            #####eager_attention_mask  NOTE attention_mask not change between layers
+            # attention_mask 
             eager_attention_mask = _prepare_4d_causal_attention_mask(
                 attention_mask, (batch_size, q_len), hidden_states, past_key_values_length=0
             ).to(device=query_states.device)
@@ -1360,7 +1352,6 @@ class LlamaModel(LlamaPreTrainedModel):
             labels = [cur_labels[cur_attention_mask] for cur_labels, cur_attention_mask in zip(labels, attention_mask)]
             attention_mask = [cur_attention_mask[cur_attention_mask] for cur_attention_mask, cur_attention_mask in zip(attention_mask, attention_mask)]
 
-            # import pdb;pdb.set_trace()
             # rank & drop
             for i in range(batch_size):
                 image_index= self.image_token_posi[i]

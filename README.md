@@ -44,5 +44,5 @@ If you want to use PyramidDrop to operate efficient inference on original llava1
 
 Options to note:
 
-- `--layer_list  '[8,16,24]' `: denote the layers after which we apply rank & drop.
-- `--image_token_ratio_list "[1.0,0.5,0.25,0.125]" `: denote the image tokens ratio we retain at different stage, and this represents we obtain 50%, 25%, 12.5% after layer8, layer16, layer24.
+- `--layer_list  '[8,16,24]' `: the layers after which we apply rank & drop.
+- `--image_token_ratio_list "[0.5,0.25,0.125]" `: denote the image tokens ratio we retain at different stage, and this represents we obtain 50%, 25%, 12.5% after layer8, layer16, layer24.

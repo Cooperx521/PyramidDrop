@@ -34,6 +34,7 @@ from llava.train.llava_trainer import LLaVATrainer
 from llava import conversation as conversation_lib
 from llava.model import *
 from llava.mm_utils import tokenizer_image_token
+from llava.model.language_model.llava_llama_pdrop import LlavaLlamaForCausalLM_PDrop
 
 from PIL import Image
 
@@ -64,6 +65,8 @@ class ModelArguments:
     mm_use_im_patch_token: bool = field(default=True)
     mm_patch_merge_type: Optional[str] = field(default='flat')
     mm_vision_select_feature: Optional[str] = field(default="patch")
+    layer_list: str = field(default=None)
+    image_token_ratio_list: str = field(default=None)
 
 
 @dataclass
@@ -409,7 +412,6 @@ def preprocess_llama_2(
         input_ids=input_ids,
         labels=targets,
     )
-
 
 def preprocess_v1(
     sources,
@@ -824,7 +826,7 @@ def train(attn_implementation=None):
                 **bnb_model_from_pretrained_args
             )
         else:
-            model = LlavaLlamaForCausalLM.from_pretrained(
+            model = LlavaLlamaForCausalLM_PDrop.from_pretrained(
                 model_args.model_name_or_path,
                 cache_dir=training_args.cache_dir,
                 attn_implementation=attn_implementation,
@@ -840,6 +842,10 @@ def train(attn_implementation=None):
             **bnb_model_from_pretrained_args
         )
     model.config.use_cache = False
+    # record the pdrop params
+    model.model.layer_list = eval(model_args.layer_list)
+    model.model.image_token_ratio_list = eval(model_args.image_token_ratio_list)
+    model.model.image_token_ratio_list.insert(0, 1.0)
 
     if model_args.freeze_backbone:
         model.model.requires_grad_(False)

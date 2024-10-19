@@ -1,5 +1,8 @@
 #!/bin/bash
 
+export layer_list="[8,16,24]"
+export image_token_ratio_list="[0.5,0.25,0.125]"
+
 deepspeed llava/train/train_mem.py \
     --deepspeed ./scripts/zero3.json \
     --model_name_or_path lmsys/vicuna-13b-v1.5 \
@@ -34,4 +37,6 @@ deepspeed llava/train/train_mem.py \
     --gradient_checkpointing True \
     --dataloader_num_workers 4 \
     --lazy_preprocess True \
+    --layer_list  ${layer_list} \
+    --image_token_ratio_list ${image_token_ratio_list} \
     --report_to wandb
