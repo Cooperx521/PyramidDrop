@@ -61,3 +61,8 @@ OCRVQA we use [VLMEvalKit](https://github.com/open-compass/VLMEvalKit).
 See [Evaluation.md](https://github.com/haotian-liu/LLaVA/blob/main/docs/Evaluation.md) to prepare for inference. 
 
 If you want to use PyramidDrop to operate efficient inference on original llava1.5, evaluation code can be found in ```scripts/v1_5/pdrop_eval```
+
+
+
+## Acknowledgement
+This repo is based on the codebase of [LLaVA](https://github.com/haotian-liu/LLaVA) and [Open-LLaVA-NeXT](https://github.com/xiaoachen98/Open-LLaVA-NeXT). Thanks for their impressive works!
