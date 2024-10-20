@@ -29,7 +29,7 @@ srun -p Your Partion \
     --quotatype=${QUOTA} \
     ${SRUN_ARGS} \
     bash -c 'torchrun --nnodes $NNODES --nproc_per_node $GPUS_PER_NODE --node_rank $SLURM_NODEID --master_addr $(scontrol show hostname $SLURM_NODELIST | head -n1) --master_port ${MASTER_PORT} \
-    llava/train/train_mem.py \
+    llava/train/train_mem_pdrop_next.py \
     --deepspeed ./scripts/zero2.json \
     --model_name_or_path pretrained/vicuna/vicuna-7b-v1.5 \
     --version plain \

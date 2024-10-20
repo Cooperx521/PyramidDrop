@@ -1,4 +1,7 @@
 # PyramidDrop: Accelerating Your Large Vision-Language Models via Pyramid Visual Redundancy Reduction
+<p align="center">
+    <img src="figs/pipe.png" width="100%"> <br>
+</p>
 
 ## 🎯 News
 
@@ -8,6 +11,7 @@
 
 - [x] Release the PDrop evaluation and training code of llava1.5
 - [x] Release the PDrop evaluation and training code of llava-next
+- [x] Support kv cache 
 - [ ] Release the checkpoints 
 
 ## 🔧 Install
