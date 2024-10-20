@@ -7,6 +7,18 @@
 
 **[2024.10.18]** 🚀 We release the paper at [ArXiv]()
 
+## 💡 Highlights
+- 🔥 **Increasing Redundancy**: We find that redundancy of
+image tokens is relatively minimal in the shallow layers and becomes progressively larger in deeper
+layers. 
+- 🔥 **Efficient Training**: PyramidDrop can achieve a 40% training time and 55% inference FLOPs acceleration of LLaVA-NeXT with comparable performance.
+- 🔥 **Efficient Inference**: PyramidDrop
+could also serve as a plug-and-play strategy for inference acceleration without
+training, with better performance and lower inference cost than counterparts.
+- 🔥 **High Compatibility**:
+Our codebase support flash_attention_2, sdpa and eager attention pattern, and it can be easily migrated to different versions of Transformers.
+
+
 ## 👨‍💻 Todo
 
 - [x] Release the PDrop evaluation and training code of llava1.5
