@@ -67,7 +67,7 @@ Then you can directly use PyramidDrop to reduce training cost, code can be found
 Options to note:
 
 - `--layer_list  '[8,16,24]' `: the layers after which we apply rank & drop.
-- `--image_token_ratio_list "[0.5,0.25,0.125]" `: denote the image tokens ratio we retain at different stage, and this represents we obtain 50%, 25%, 12.5% after layer8, layer16, layer24. In this case, λ = 0.5.
+- `--image_token_ratio_list "[0.5,0.25,0.125]" `: denote the image tokens ratio we retain at different stage, and this represents we obtain 50%, 25%, 12.5% after layer8, layer16, layer24. In this case, we have divided the forward pass into 4 stages, and λ = 0.5.
 
 ## Efficient Inference
 
