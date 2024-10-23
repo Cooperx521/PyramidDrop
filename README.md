@@ -5,7 +5,7 @@
 
 ## 🎯 News
 
-**[2024.10.23]** 🚀 We release the paper at [ArXiv](https://arxiv.org/abs/2410.17247)!
+**[2024.10.23]** 🚀 We release the paper at [ArXiv](https://arxiv.org/abs/2410.17247) and [Huggingface](https://huggingface.co/papers/2410.17247)!
 
 ## 💡 Highlights
 - 🔥 **Increasing Redundancy**: We find that redundancy of
