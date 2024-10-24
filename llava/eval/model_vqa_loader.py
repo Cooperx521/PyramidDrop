@@ -93,6 +93,7 @@ def eval_model(args):
     if model_class_name == "LlavaLlamaForCausalLM_PDrop":
         model.model.layer_list = eval(args.layer_list)
         model.model.image_token_ratio_list = eval(args.image_token_ratio_list)
+        model.model.image_token_ratio_list.insert(0, 1.0)
 
     questions = [json.loads(q) for q in open(os.path.expanduser(args.question_file), "r")]
     questions = get_chunk(questions, args.num_chunks, args.chunk_idx)
