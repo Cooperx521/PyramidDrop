@@ -5,6 +5,8 @@
 
 ## 🎯 News
 
+**[2024.10.24]** 🚀 Our paper has been featured as [#1 Paper of the day](https://huggingface.co/papers?date=2024-10-23) on HuggingFace Daily Papers.
+
 **[2024.10.23]** 🚀 We release the paper at [ArXiv](https://arxiv.org/abs/2410.17247) and [Huggingface](https://huggingface.co/papers/2410.17247)!
 
 ## 💡 Highlights
