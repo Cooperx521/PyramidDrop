@@ -26,7 +26,7 @@ Our codebase support flash_attention_2, sdpa and eager attention pattern, and it
 - [x] Release the PDrop evaluation and training code of llava1.5
 - [x] Release the PDrop evaluation and training code of llava-next
 - [x] Support kv cache 
-- [ ] Release the checkpoints 
+- [ ] Support video llava
 
 ## 🔧 Install
 
