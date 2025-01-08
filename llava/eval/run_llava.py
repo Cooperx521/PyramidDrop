@@ -50,11 +50,17 @@ def load_images(image_files):
 def eval_model(args):
     # Model
     disable_torch_init()
-
     model_name = get_model_name_from_path(args.model_path)
+    if args.layer_list is not None:
+        pdrop_infer = True  # whether to use pdrop infer    
     tokenizer, model, image_processor, context_len = load_pretrained_model(
-        args.model_path, args.model_base, model_name
+        args.model_path, args.model_base, model_name, pdrop_infer
     )
+    model_class_name = type(model).__name__
+    if model_class_name == "LlavaLlamaForCausalLM_PDrop":
+        model.model.layer_list = eval(args.layer_list)
+        model.model.image_token_ratio_list = eval(args.image_token_ratio_list)
+        model.model.image_token_ratio_list.insert(0, 1.0)
 
     qs = args.query
     image_token_se = DEFAULT_IM_START_TOKEN + DEFAULT_IMAGE_TOKEN + DEFAULT_IM_END_TOKEN
@@ -140,6 +146,8 @@ if __name__ == "__main__":
     parser.add_argument("--top_p", type=float, default=None)
     parser.add_argument("--num_beams", type=int, default=1)
     parser.add_argument("--max_new_tokens", type=int, default=512)
+    parser.add_argument("--layer_list", type=str, default= None)
+    parser.add_argument("--image_token_ratio_list", type=str, default= None)
     args = parser.parse_args()
 
     eval_model(args)
