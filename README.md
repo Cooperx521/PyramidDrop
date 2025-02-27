@@ -4,6 +4,7 @@
 </p>
 
 ## 🎯 News
+**[2025.2.27]** 🚀 Our paper has been accepted by CVPR 2025!!!
 
 **[2024.10.24]** 🚀 Our paper has been featured as [#1 Paper of the day](https://huggingface.co/papers?date=2024-10-23) on HuggingFace Daily Papers.
 
