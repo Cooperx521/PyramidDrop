@@ -1,4 +1,4 @@
-# PyramidDrop: Accelerating Your Large Vision-Language Models via Pyramid Visual Redundancy Reduction
+# PyramidDrop: Accelerating Your Large Vision-Language Models via Pyramid Visual Redundancy Reduction (CVPR 2025)
 <p align="center">
     <img src="figs/pipe.png" width="100%"> <br>
 </p>
