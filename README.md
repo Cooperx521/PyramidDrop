@@ -28,6 +28,7 @@ Our codebase support flash_attention_2, sdpa and eager attention pattern, and it
 - [x] Release the PDrop evaluation and training code of llava-next
 - [x] Support kv cache 
 - [ ] Support video llava
+- [ ] Further simplify the code to facilitate migration to Qwen and different versions of Transformer.
 
 ## 🔧 Install
 
